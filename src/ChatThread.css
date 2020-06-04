@@ -1,0 +1,31 @@
+.ChatThread-layout {
+  position: absolute;
+  z-index: 0;
+  top: 63vh;
+  left: 69vw;
+  width: 30vw;
+  height: 25vh;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); 
+}
+
+.ChatThread-topic {
+  font-size: 120%;
+  font-weight: bold;
+  text-decoration: underline;
+  position: absolute;
+  left: 0.5vw;
+}
+
+.ChatThread-container {
+  position: absolute;
+  z-index: 1;
+  top: 5vh;
+  left: 0.5vw;
+  width: 29.5vw;
+  height: 19.5vh;
+  overflow: auto;
+}
+
+.ChatThread-title {
+  text-align: center;
+}

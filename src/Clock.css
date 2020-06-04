@@ -1,0 +1,17 @@
+.Clock-time {
+
+  font-size: 5vh;
+}
+
+.Clock-ampm {
+  font-size: 3vh;
+}
+
+.Clock-date {
+  font-size: 2vh;
+}
+.Clock-layout {
+  padding-left: 1vw;
+  width: 20vw;
+  text-align: left;
+}

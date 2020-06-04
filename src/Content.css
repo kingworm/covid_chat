@@ -1,0 +1,13 @@
+.Content-layout {
+  position: absolute;
+  z-index: 0;
+  top: 11vh;
+  left: 22vw;
+  width: 46vw;
+  height: 50vh;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.Content-title {
+  text-align: center;
+}

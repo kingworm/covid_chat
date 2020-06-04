@@ -1,0 +1,28 @@
+
+.Chat1D-layout {
+  position: absolute;
+  z-index: 0;
+  top: 63vh;
+  left: 1vw;
+  width: 67vw;
+  height: 25vh;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.Chat1D-title {
+  text-align: center;
+}
+.Chat1D-container {
+  position: absolute;
+  z-index: 1;
+  top: 3vh;
+  left: 0.5vw;
+  width: 66.5vw;
+  height: 21.5vh;
+  overflow: auto;
+}
+.Chat1D-single {
+  cursor: pointer;
+}
+.Chat1D-single:hover{
+  background-color : gray;
+}

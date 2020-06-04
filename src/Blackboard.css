@@ -1,0 +1,47 @@
+.Blackboard-layout {
+  position: absolute;
+  z-index: 0;
+  top: 11vh;
+  left: 1vw;
+  width: 20vw;
+  height: 50vh;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.Blackboard-fixButton {
+  position: absolute;
+  z-index: 3;
+  top: 0vh;
+  width: 3vw;
+  left: 14vw;
+}
+.Blackboard-updateButton {
+  position: absolute;
+  z-index: 3;
+  top: 0vh;
+  width: 3vw;
+  left: 17vw;
+}
+
+.Blackboard-inputBox {
+  position: absolute;
+  text-align: center;
+  z-index: 2;
+  left: 0.5vw;
+  top: 4vh;
+  width: 18.5vw;
+  height: 44.5vh
+}
+.Blackboard-notice {
+  text-align: center;
+  position: absolute;
+  z-index: 2;
+  left: 0.5vw;
+  top: 3vh;
+  width: 18.5vw;
+  height: 55.5vh
+}
+
+.Blackboard-title {
+  text-align: center;
+}
