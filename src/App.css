@@ -11,6 +11,13 @@
   
 }
 
+.AppCommandInput {
+  position: absolute;
+  width : 20vw;
+  top: 1vh;
+  left: 79vw;
+}
+
 .App-ChatThreadInput {
   position: absolute;
   top: 90vh;

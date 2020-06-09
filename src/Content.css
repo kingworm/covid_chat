@@ -11,3 +11,8 @@
 .Content-title {
   text-align: center;
 }
+
+.Content-player {
+  display: none;
+  height: 50vh;
+}

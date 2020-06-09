@@ -20,23 +20,51 @@ class App extends Component {
       remove: 0,
       scrollIndex: "o",
       isBreakTime: false,
+      commandValue: "",
+      videoID: "",
+      playerStyle: {display: "none"},
     };
   }
 
-  handleKeyPress = (e) => {
-    if(e.charCode === "b"){
-      this.setState({
-        isBreakTime: !this.state.isBreakTime,
-      });
-      if(this.state.isBreakTime) {
-        window.alert("쉬는 시간이에요!");
-      }
-      else{
-        window.alert("수업 시간입니다.");
+  handleReadData(readData) {
+    if(readData === "break") {
+      window.alert("쉬는시간");
+    }
+    else if (readData === "!break"){
+      window.alert("수업시간");
+    }
+    else if(readData.substring(0,4) === "http"){
+      var videoID = readData.match(/(?:https?:\/{2})?(?:w{3}\.)?youtu(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]+)/);
+      if(videoID != null) {
+        const playerStyle = {
+          display: "block",
+        }
+        this.setState({
+          videoID: videoID[1],
+          playerStyle: playerStyle,
+        });
+        window.alert("URL이 업데이트 되었습니다");
+      } else { 
+        window.alert("유효하지 않은 URL입니다.");
       }
     }
+    else if(readData === "refresh"){
+      this.setState({
+        chatValue: "",
+        chatThreadValue: "",
+        chatThreadIndex: null,
+        chatThreadList: [],
+        chat2DList: [],
+        chat1DList: [],
+        remove: 0,
+        scrollIndex: "o",
+        isBreakTime: false,
+        commandValue: "",
+        videoID: "",
+        playerStyle: {display: "none"},
+      })
+    }
   }
-
 
   chat1DdoChange (e) {
     const newValue = e.target.value;
@@ -86,18 +114,11 @@ class App extends Component {
     else{
       if(chatValue) {
           const popupX = 69 + Math.random() * (31-15);
-          const popupY = 2 + Math.random() * 58;
+          const popupY = 11 + Math.random() * 48;
           const popupStyle = {
-            zIndex: '1',
-            position: "absolute",
             left: popupX +"vw",
             top: popupY + "vh",
-            border: "1px solid",
             width: 40+chatValue.length*15+"px",
-            maxWidth: "15vw",
-            text_align: 'center',
-            verticalAlign: 'middle',
-            background: "white",
           };
           const newItem = {
             popupStyle: popupStyle,
@@ -149,6 +170,7 @@ class App extends Component {
     const newValue = e.target.value;
     this.setState({chatThreadValue: newValue});
   }
+
 
   chatThreadDoSubmit(e){
     const chatThreadIndex = this.state.chatThreadIndex;
@@ -221,22 +243,47 @@ class App extends Component {
     }
   }
 
+
+  commandDoChange (e) {
+    const newValue = e.target.value;
+    this.setState({commandValue: newValue});
+  }
+
+  commandDoSubmit(e){
+    this.handleReadData(this.state.commandValue);
+    this.setState({
+      commandValue: "",
+    })
+    e.preventDefault();
+  }
+
   render() {
     const chat1DdoSubmit = (e) => this.chat1DdoSubmit(e);
     const chat1DdoChange = (e) => this.chat1DdoChange(e);
     const chatThreadDoSubmit = (e) => this.chatThreadDoSubmit(e);
     const chatThreadDoChange = (e) => this.chatThreadDoChange(e);
+    const commandDoChange = (e) => this.commandDoChange(e);
+    const commandDoSubmit = (e) => this.commandDoSubmit(e);
 
     return (
     <div className="App">
-      <div className="App-clock">
+      <span className="App-clock">
         <Clock />
-      </div>
+      </span>
+      <span className="App-Command">
+        <form onSubmit={commandDoSubmit}>
+          <input type= "text" 
+              className="AppCommandInput" 
+              value={this.state.commandValue} 
+              onChange={commandDoChange}
+              placeholder="명령을 입력해주세요"/>
+        </form>
+      </span>
       <div className="App-Blackboard">
         <Blackboard />
       </div>
       <div className="App-content">
-        <Content />
+        <Content videoID = {this.state.videoID} playerStyle={this.state.playerStyle}/>
       </div>
       <div className="App-ChatThread">
         <ChatThread chatList={this.state.chatThreadList}
