@@ -26,6 +26,12 @@ export const receive2DChat = data => {
   };
 };
 
+export const pop2DChat = data => {
+  return {
+    type: type.POP_2D_CHAT
+  };
+};
+
 export const sendThreadChat = () => {
   return {
     type: type.SEND_THREAD_CHAT
@@ -49,6 +55,19 @@ export const clearChat = data => {
 export const mySocketId = data => {
   return {
     type: type.MY_SOCKET_ID,
+    data
+  };
+};
+
+export const sendNotice = () => {
+  return {
+    type: type.SEND_NOTICE
+  };
+};
+
+export const receiveNotice = data => {
+  return {
+    type: type.RECEIVE_NOTICE,
     data
   };
 };

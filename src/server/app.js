@@ -1,8 +1,9 @@
 var express = require("express");
 var app = express();
-
+var cors = require("cors");
 var indexRouter = require("./routes/index");
 
+app.use(cors());
 app.use(indexRouter);
 var usersRouter = require("./routes/users");
 app.use("/users", usersRouter);
@@ -32,13 +33,18 @@ io.on("connection", socket => {
   });
 
   socket.on("send 2d chat", data => {
-    console.log(`${socket.id} : ${data.chat}`);
+    console.log(`${data.username}::${socket.id} : ${data.chat}`);
     io.emit("receive 2d chat", data);
   });
 
   socket.on("send thread chat", data => {
-    console.log(`${socket.id} : ${data.chat}`);
+    console.log(`${data.username}::${socket.id} : ${data.chat}`);
     io.emit("receive thread chat", data);
+  });
+
+  socket.on("send notice", data => {
+    console.log(`${data.username}::${socket.id} : ${data.notice}`);
+    io.emit("receive notice", data);
   });
 
   socket.on("leave chatroom", data => {
@@ -49,6 +55,8 @@ io.on("connection", socket => {
       regDate: Date.now()
     });
   });
+
+  socket.on("disconnect", () => console.log("Client disconnected"));
 });
 server.listen(port, () => {
   console.log(`listening port ${port}... `);

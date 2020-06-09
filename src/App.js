@@ -9,8 +9,8 @@ import Clock from "./Clock";
 
 class App extends Component {
   constructor(props) {
-    super(props);
     console.log(props);
+    super(props);
     this.state = {
       username: "guest",
       chatValue: "",
@@ -70,19 +70,11 @@ class App extends Component {
         chatValue: chatValue.slice(1, chatValue.length),
         chatThreadList: []
       };
+      console.log("send chat !!");
       this.props.sendChat({
         chat: newItem,
         username: this.state.username
       });
-      // if (chat1DList.empty) {
-      //   this.setState({
-      //     chat1DList: [newItem]
-      //   });
-      // } else {
-      //   this.setState({
-      //     chat1DList: chat1DList.concat(newItem)
-      //   });
-      // }
       this.setState({
         chat1DList: this.props.chatReducer.chat1DList
       });
@@ -213,50 +205,20 @@ class App extends Component {
   }
 
   componentDidMount() {
-    // fetch("/users")
-    //   .then(res => res.json())
-    //   .then(users => this.setState({ users }));
-    // this.socket = socketIOClient("http://localhost:3002");
-    // this.socket.on("my socket id", data => {
-    //   console.log(data);
-    //   this.setState({
-    //     ...this.state,
-    //     socketID: data.socketId
-    //   });
-    //   this.socket.emit("enter chatroom", { username: this.state.username });
-    // });
-    // this.socket.on("recieve chat", data => {
-    //   console.log("recieve chat", data);
-    // });
-  }
-
-  componentWillUnmount() {
-    // this.socket.emit("leave chatroom", () => {
-    //   this.setState({
-    //     ...this.state,
-    //     socketID: null
-    //   });
-    // });
-    // this.socket = null;
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    if (
-      nextProps.chatReducer !== this.props.chatReducer ||
-      this.state !== nextState
-    ) {
-      return true;
-    }
+    // this.props.enterChatroom();
   }
 
   componentDidUpdate() {
-    const chat2DList = this.state.chat2DList;
     const remove = this.state.remove;
     if (remove !== 0) {
-      this.setState({
-        chat2DList: chat2DList.slice(1, chat2DList.length),
-        remove: remove - 1
-      });
+      this.setState(
+        {
+          remove: remove - 1
+        },
+        () => {
+          this.props.pop2DChat();
+        }
+      );
     }
   }
 
@@ -281,7 +243,10 @@ class App extends Component {
           <Clock />
         </div>
         <div className="App-Blackboard">
-          <Blackboard />
+          <Blackboard
+            sendNotice={this.props.sendNotice}
+            notice={this.props.chatReducer.notice}
+          />
         </div>
         <div className="App-content">
           <Content />
@@ -294,11 +259,11 @@ class App extends Component {
           />
         </div>
         <div className="App-Chat2D">
-          <Chat2D chatList={this.state.chat2DList} />
+          <Chat2D chatList={this.props.chatReducer.chat2DList} />
         </div>
         <div className="App-Chat1D">
           <Chat1D
-            chatList={this.state.chat1DList}
+            chatList={this.props.chatReducer.chat1DList}
             chatThreadHandleClick={(flag, i) =>
               this.chatThreadHandleClick(flag, i)
             }

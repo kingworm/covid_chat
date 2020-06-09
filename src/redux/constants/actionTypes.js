@@ -6,3 +6,6 @@ export const SEND_2D_CHAT = "SEND_2D_CHAT";
 export const RECEIVE_2D_CHAT = "RECEIVE_2D_CHAT";
 export const SEND_THREAD_CHAT = "SEND_THREAD_CHAT";
 export const RECEIVE_THREAD_CHAT = "RECEIVE_THREAD_CHAT";
+export const POP_2D_CHAT = "POP_2D_CHAT";
+export const RECEIVE_NOTICE = "RECEIVE_NOTICE";
+export const SEND_NOTICE = "SEND_NOTICE";

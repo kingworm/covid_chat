@@ -5,7 +5,8 @@ const chatStates = {
   chat1DList: [],
   chat2DList: [],
   chatThreadList: {},
-  socketId: null
+  socketId: null,
+  notice: ""
 };
 
 const chatReducer = (state = chatStates, action) => {
@@ -27,8 +28,13 @@ const chatReducer = (state = chatStates, action) => {
     //   let newThreadChatList = targetThread.slice();
     //   newThreadChatList.push(action.data.chat);
     //   return { ...state, chatThreadList: { ...state.chatThreadList, action.data.threadID : newThreadChatList} };
+    case type.POP_2D_CHAT:
+      let pop2DChatList = state.chat2DList.slice(1, state.chat2DList.length);
+      return { ...state, chat2DList: pop2DChatList };
     case type.CLEAR_CHAT:
-      return { ...state, chatList: [] };
+      return { ...state, chat1DList: [] };
+    case type.RECEIVE_NOTICE:
+      return { ...state, notice: action.data.notice };
     default:
       return state;
   }

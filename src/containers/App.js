@@ -1,9 +1,7 @@
 import { connect } from "react-redux";
 import * as action from "../redux/actions/actions";
-import socketIOClient from "socket.io-client";
 import App from "../../src/App";
-
-const socket = socketIOClient("http://localhost:3002");
+import { socket } from "../services/socket";
 
 const socketSubscribe = dispatch => {
   socket.on("my socket id", data => {
@@ -17,6 +15,10 @@ const socketSubscribe = dispatch => {
   socket.on("receive 2d chat", data => {
     console.log("App.js Socket(receive 2d chat) ", data);
     dispatch(action.receive2DChat(data));
+  });
+  socket.on("receive notice", data => {
+    console.log("App.js Socket(receive notice) ", data);
+    dispatch(action.receiveNotice(data));
   });
 };
 
@@ -52,8 +54,20 @@ const mapDispatchToProps = dispatch => {
         regDate: Date.now()
       });
     },
+    // 2. 수업 컨텐츠 url
     clearChat: () => {
       dispatch(action.clearChat());
+    },
+    pop2DChat: () => {
+      dispatch(action.pop2DChat());
+    },
+    sendNotice: data => {
+      socket.emit("send notice", {
+        type: "msg",
+        socketId: socket.id,
+        notice: data.notice,
+        regDate: Date.now()
+      });
     }
   };
 };
