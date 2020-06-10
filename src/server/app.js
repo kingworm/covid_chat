@@ -14,7 +14,7 @@ const port = 3002;
 // app.listen(port, () => console.log(`listening on port ${port}!`));
 const server = require("http").createServer(app);
 const io = require("socket.io")(server);
-io.on("connection", socket => {
+io.once("connection", socket => {
   console.log("연결된 socketID : ", socket.id);
   io.to(socket.id).emit("my socket id", { socketId: socket.id });
 
@@ -43,7 +43,7 @@ io.on("connection", socket => {
   });
 
   socket.on("send notice", data => {
-    console.log(`${data.username}::${socket.id} : ${data.notice}`);
+    console.log(`${socket.id} : ${data.notice}`);
     io.emit("receive notice", data);
   });
 

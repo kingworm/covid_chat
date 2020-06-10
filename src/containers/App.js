@@ -35,6 +35,7 @@ const mapDispatchToProps = dispatch => {
     },
     leaveChatroom: () => {
       socket.emit("leave chatroom");
+      socket.disconnect();
     },
     sendChat: data => {
       socket.emit("send chat", {
