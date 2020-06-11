@@ -13,7 +13,8 @@ const port = 3002;
 // 3002번 포트넘버를 가진 서버 생성
 // app.listen(port, () => console.log(`listening on port ${port}!`));
 const server = require("http").createServer(app);
-const io = require("socket.io")(server);
+const io = require("socket.io")(server, { origins: "*:*" });
+io.set("origins", "capston.redwit.io:80");
 io.once("connection", socket => {
   console.log("연결된 socketID : ", socket.id);
   io.to(socket.id).emit("my socket id", { socketId: socket.id });
