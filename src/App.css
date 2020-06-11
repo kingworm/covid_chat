@@ -31,5 +31,13 @@
   height: 50px;
 }
 
+.App-classTitle {
+  position: absolute;
+  text-align: center;
+  font-size: 4vh;
+  width: 100vw;
+  top: 3vh;
+}
+
 
 

@@ -23,15 +23,22 @@ class App extends Component {
       commandValue: "",
       videoID: "",
       playerStyle: {display: "none"},
+      classTitle: "1학년 1반",
     };
   }
 
   handleReadData(readData) {
     if(readData === "break") {
-      window.alert("쉬는시간");
+      window.alert("쉬는시간입니다");
+      this.setState({
+        classTitle: "쉬는 쉬간",
+      });
     }
     else if (readData === "!break"){
-      window.alert("수업시간");
+      window.alert("수업시간입니다");
+      this.setState({
+        classTitle: "수학",
+      });
     }
     else if(readData.substring(0,4) === "http"){
       var videoID = readData.match(/(?:https?:\/{2})?(?:w{3}\.)?youtu(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]+)/);
@@ -269,6 +276,9 @@ class App extends Component {
     <div className="App">
       <span className="App-clock">
         <Clock />
+      </span>
+      <span className="App-classTitle">
+        {this.state.classTitle}
       </span>
       <span className="App-Command">
         <form onSubmit={commandDoSubmit}>

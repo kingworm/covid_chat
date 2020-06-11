@@ -9,23 +9,38 @@
 }
 
 .ChatThread-topic {
-  font-size: 120%;
-  font-weight: bold;
-  text-decoration: underline;
-  position: absolute;
-  left: 0.5vw;
+  padding-left: 1vh;
+  padding-top: 1vh;
+  height: 50px;
+  text-align: left;
+  border-bottom: solid 1px rgba(1,1,1,0.1);
 }
 
 .ChatThread-container {
   position: absolute;
   z-index: 1;
-  top: 5vh;
+  top: 70px;
   left: 0.5vw;
   width: 29.5vw;
-  height: 19.5vh;
+  height: calc(24vh - 70px);
   overflow: auto;
 }
 
 .ChatThread-title {
   text-align: center;
+}
+.ChatThread-single {
+  height: 40px;
+  padding-bottom: 10px;
+}
+.Chat1D-single-writer {
+  padding-right: 5px;
+  font-size: 15px;
+  font-weight: 900;
+}
+.Chat1D-single-time {
+  font-size: 12px;
+}
+.Chat1D-single-chatValue {
+  padding-left: 10px;
 }

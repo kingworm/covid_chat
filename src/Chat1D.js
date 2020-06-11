@@ -6,7 +6,11 @@ class Chat1D extends Component {
     const chatList = this.props.chatList;
     const chatHistory = chatList.map(
       (chat, i) => (
-        <div key = {i} className="Chat1D-single" onClick={()=>(this.props.chatThreadHandleClick("o",i))}>[{chat.time}] {chat.writer} : {chat.chatValue}</div>
+        <div key = {i} className="Chat1D-single" onClick={()=>(this.props.chatThreadHandleClick("o",i))}>
+          <span className="Chat1D-single-writer">{chat.writer}</span>
+          <span className="Chat1D-single-time">{chat.time}</span>
+          <div className="Chat1D-single-chatValue">{chat.chatValue}</div>
+        </div>
       )
     );
     return (

@@ -5,16 +5,23 @@ class ChatThread extends Component {
   render() {
     const chatList = this.props.chatList;
     const chatTopic = (this.props.chatTopic ? 
-                      <div className="ChatThread-topic">{this.props.chatTopic.writer} : {this.props.chatTopic.chatValue}</div> :
+                      <div className="ChatThread-topic">
+                          <span className="Chat1D-single-writer">{this.props.chatTopic.writer}</span>
+                          <span className="Chat1D-single-time">{this.props.chatTopic.time}</span>
+                          <div className="Chat1D-single-chatValue">{this.props.chatTopic.chatValue}</div>
+                      </div> :
                       <div></div>);
     const chatHistory = chatList.map(
       (chat, i) => (
-        <div key = {i} className="ChatThread-single" >[{chat.time}] {chat.writer} : {chat.chatValue}</div>
+        <div key = {i} className="ChatThread-single" >
+          <span className="Chat1D-single-writer">{chat.writer}</span>
+          <span className="Chat1D-single-time">{chat.time}</span>
+          <div className="Chat1D-single-chatValue">{chat.chatValue}</div>
+        </div>
       )
     );
     return (
       <div className="ChatThread-layout">
-        <div className="ChatThread-title">쓰레드 채팅방</div>
         {chatTopic}
         <div className="ChatThread-container">
           <div className="ChatThread-chatList">
