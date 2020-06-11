@@ -21,8 +21,8 @@ class App extends Component {
       scrollIndex: "o",
       isBreakTime: false,
       commandValue: "",
-      videoID: "",
-      playerStyle: {display: "none"},
+      videoID: "hF_lIqruUeQ",
+      playerStyle: {display: "block"},
       classTitle: "1학년 1반",
     };
   }
