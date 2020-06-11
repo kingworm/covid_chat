@@ -24,6 +24,7 @@ class App extends Component {
       videoID: "hF_lIqruUeQ",
       playerStyle: {display: "block"},
       classTitle: "1학년 1반",
+      isPlayerRendered: false,
     };
   }
 
@@ -272,6 +273,14 @@ class App extends Component {
     const commandDoChange = (e) => this.commandDoChange(e);
     const commandDoSubmit = (e) => this.commandDoSubmit(e);
 
+    const content_div = (this.state.isPlayerRendered? 
+      <Content videoID = {this.state.videoID} playerStyle={this.state.playerStyle}/>:
+      <Content videoID = {this.state.videoID} playerStyle={this.state.playerStyle}/> );
+    if(this.state.isPlayerRendered === false){
+      this.setState({
+        isPlayerRendered: true,
+      });
+    }
     return (
     <div className="App">
       <span className="App-clock">
@@ -293,7 +302,7 @@ class App extends Component {
         <Blackboard />
       </div>
       <div className="App-content">
-        <Content videoID = {this.state.videoID} playerStyle={this.state.playerStyle}/>
+        {content_div}
       </div>
       <div className="App-ChatThread">
         <ChatThread chatList={this.state.chatThreadList}

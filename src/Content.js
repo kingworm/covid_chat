@@ -13,13 +13,22 @@ class Content extends Component {
       },
     };
   }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.props.videoID === nextProps.videoID) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   render() {
     return (
       <div className="Content-layout">
         <div className ="Content-player" style={this.props.playerStyle}>
           <YoutubePlayer
             videoId={this.props.videoID}
-            playbackState='unstarted'
+            playbackState='playing'
             configuration={
                 {
                     showinfo: 0,
