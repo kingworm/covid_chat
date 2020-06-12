@@ -24,6 +24,12 @@ const socketSubscribe = dispatch => {
     console.log("App.js Socket(receive notice) ", data);
     dispatch(action.receiveNotice(data));
   });
+  socket.on("enter chatroom", data => {
+    console.log("App.js Socket(receive notice) ", data);
+  });
+  socket.on("leave chatroom", data => {
+    console.log("App.js Socket(receive notice) ", data);
+  });
 };
 
 const mapStateToProps = state => {
@@ -34,8 +40,12 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   socketSubscribe(dispatch);
   return {
-    enterChatroom: () => {
-      socket.emit("enter chatroom");
+    enterChatroom: data => {
+      console.log("enter room", data);
+      socket.emit("enter chatroom", {
+        num: 0,
+        username: data.username
+      });
     },
     leaveChatroom: () => {
       socket.emit("leave chatroom");
@@ -43,6 +53,7 @@ const mapDispatchToProps = dispatch => {
     },
     sendChat: data => {
       socket.emit("send chat", {
+        num: 0,
         type: "msg",
         socketId: socket.id,
         chat: data.chat,
@@ -52,6 +63,7 @@ const mapDispatchToProps = dispatch => {
     },
     send2DChat: data => {
       socket.emit("send 2d chat", {
+        num: 0,
         type: "msg",
         socketId: socket.id,
         chat: data.chat,
@@ -61,6 +73,7 @@ const mapDispatchToProps = dispatch => {
     },
     sendThreadChat: data => {
       socket.emit("send thread chat", {
+        num: 0,
         type: "msg",
         socketId: socket.id,
         index: data.index,
@@ -78,6 +91,7 @@ const mapDispatchToProps = dispatch => {
     },
     sendNotice: data => {
       socket.emit("send notice", {
+        num: 0,
         type: "msg",
         socketId: socket.id,
         notice: data.notice,

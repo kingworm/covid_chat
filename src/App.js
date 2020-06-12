@@ -214,7 +214,9 @@ class App extends Component {
   }
 
   componentDidMount() {
-    // this.props.enterChatroom();
+    this.props.enterChatroom({
+      username: this.state.username
+    });
   }
 
   componentDidUpdate() {
