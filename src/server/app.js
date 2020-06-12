@@ -2,18 +2,24 @@ var express = require("express");
 var app = express();
 var cors = require("cors");
 var indexRouter = require("./routes/index");
-var path = require('path');
-app.use(cors);
+var path = require("path");
+app.use(cors());
 app.use(indexRouter);
 var usersRouter = require("./routes/users");
 app.use("/users", usersRouter);
-app.set('views', path.join(__dirname, '../../build'));
-app.set('view engine', 'jade');
 
-app.use(express.static(path.join(__dirname,'../../build')));
+const buildPath = path.join(__dirname, "../../build");
+console.log(buildPath);
+app.set("views", buildPath);
+app.set("view engine", "jade");
+
+app.use(express.static(buildPath));
 // portnumber를 3002로 지정
-const port = process.env.PORT || 8080;
-
+const port = process.env.PORT || 3002;
+// app.use(function(req, res, next) {
+//   res.setHeader("Access-Control-Allow-Origin", "*");
+//   next();
+// });
 // 3002번 포트넘버를 가진 서버 생성
 // app.listen(port, () => console.log(`listening on port ${port}!`));
 const server = require("http").createServer(app);
