@@ -8,3 +8,19 @@
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   text-align: center;
 }
+
+.Chat2D-popup {
+  z-Index: 1;
+  padding: 5px;
+  position: absolute;
+  border: 1px solid;
+  max-width: 15vw;
+  text-align: center;
+  vertical-align: middle;
+  background: white;
+}
+
+.Chat2D-popup-writer {
+  font-weight: 900;
+  font-size: 10px;
+}

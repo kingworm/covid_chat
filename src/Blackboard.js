@@ -5,8 +5,9 @@ class Blackboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      notice: this.props.notice,
-      inputBoxDisplay: "none"
+      notice: "",
+      inputBoxDisplay: "none",
+      buttonValue: "수정"
     };
   }
   blackboardDoFix() {
@@ -16,9 +17,17 @@ class Blackboard extends Component {
   }
   blackboardDoSubmit() {
     this.props.sendNotice({ notice: this.state.notice });
-    this.setState({
-      inputBoxDisplay: "none"
-    });
+    if (this.state.buttonValue === "적용") {
+      this.setState({
+        inputBoxDisplay: "none",
+        buttonValue: "수정"
+      });
+    } else {
+      this.setState({
+        inputBoxDisplay: "block",
+        buttonValue: "적용"
+      });
+    }
   }
   blackboardDoChange(e) {
     const newValue = e.target.value;
@@ -33,16 +42,10 @@ class Blackboard extends Component {
       <div className="Blackboard-layout">
         <div className="Blackboard-title">공지사항</div>
         <button
-          className="Blackboard-fixButton"
-          onClick={() => this.blackboardDoFix()}
-        >
-          수정
-        </button>
-        <button
           className="Blackboard-updateButton"
           onClick={() => this.blackboardDoSubmit()}
         >
-          적용
+          {this.state.buttonValue}
         </button>
         <pre className="Blackboard-notice">{this.state.notice}</pre>
         <textarea

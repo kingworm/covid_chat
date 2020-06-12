@@ -8,7 +8,10 @@ class Chat2D extends Component {
     const chatList = this.props.chatList;
     const popups = chatList.map(
       (chat, i) => (
-        <div key = {i} style={chat.popupStyle}>{chat.writer} : {chat.chatValue}</div>
+        <div className="Chat2D-popup" key = {i} style={chat.popupStyle}>
+          <div className="Chat2D-popup-writer">{chat.writer}</div>
+          <div className="Chat2D-popup-chatValue">{chat.chatValue}</div>
+        </div>
       )
     );
     return (

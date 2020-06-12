@@ -22,22 +22,59 @@ class App extends Component {
       remove: 0,
       scrollIndex: "o",
       isBreakTime: false,
-      users: []
+      users: [],
+      commandValue: "",
+      videoID: "hF_lIqruUeQ",
+      playerStyle: { display: "block" },
+      classTitle: "1학년 1반",
+      isPlayerRendered: false
     };
   }
 
-  handleKeyPress = e => {
-    if (e.charCode === "b") {
+  handleReadData(readData) {
+    if (readData === "break") {
+      window.alert("쉬는시간입니다");
       this.setState({
-        isBreakTime: !this.state.isBreakTime
+        classTitle: "쉬는 쉬간"
       });
-      if (this.state.isBreakTime) {
-        window.alert("쉬는 시간이에요!");
+    } else if (readData === "!break") {
+      window.alert("수업시간입니다");
+      this.setState({
+        classTitle: "수학"
+      });
+    } else if (readData.substring(0, 4) === "http") {
+      var videoID = readData.match(
+        /(?:https?:\/{2})?(?:w{3}\.)?youtu(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]+)/
+      );
+      if (videoID != null) {
+        const playerStyle = {
+          display: "block"
+        };
+        this.setState({
+          videoID: videoID[1],
+          playerStyle: playerStyle
+        });
+        window.alert("URL이 업데이트 되었습니다");
       } else {
-        window.alert("수업 시간입니다.");
+        window.alert("유효하지 않은 URL입니다.");
       }
+    } else if (readData === "refresh") {
+      this.setState({
+        chatValue: "",
+        chatThreadValue: "",
+        chatThreadIndex: null,
+        chatThreadList: [],
+        chat2DList: [],
+        chat1DList: [],
+        remove: 0,
+        scrollIndex: "o",
+        isBreakTime: false,
+        commandValue: "",
+        videoID: "",
+        playerStyle: { display: "none" }
+      });
     }
-  };
+  }
 
   chat1DdoChange(e) {
     const newValue = e.target.value;
@@ -45,7 +82,7 @@ class App extends Component {
   }
 
   chat1DdoSubmit(e) {
-    // const chat2DList = this.props.chatReducer.chat2DList;
+    const chat2DList = this.props.chatReducer.chat2DList;
     const chatValue = this.state.chatValue;
     if (chatValue.startsWith("!")) {
       /* Chat1D로 가야함 */
@@ -84,38 +121,27 @@ class App extends Component {
     } else {
       if (chatValue) {
         const popupX = 69 + Math.random() * (31 - 15);
-        const popupY = 2 + Math.random() * 58;
+        const popupY = 11 + Math.random() * 48;
         const popupStyle = {
-          zIndex: "1",
-          position: "absolute",
           left: popupX + "vw",
           top: popupY + "vh",
-          border: "1px solid",
-          width: 40 + chatValue.length * 15 + "px",
-          maxWidth: "15vw",
-          text_align: "center",
-          verticalAlign: "middle",
-          background: "white"
+          width: 40 + chatValue.length * 15 + "px"
         };
         const newItem = {
           popupStyle: popupStyle,
-          writer: this.state.username,
+          writer: "나",
           chatValue: chatValue
         };
-        this.props.send2DChat({ chat: newItem, username: this.state.username });
-        // if (!chat2DList) {
-        //   const newList = [newItem];
-        //   this.setState({
-        //     chat2DList: newList
-        //   });
-        // } else {
-        //   this.setState({
-        //     chat2DList: chat2DList.concat(newItem)
-        //   });
-        // }
-        this.setState({
-          chat2DList: this.props.chatReducer.chat2DList
-        });
+        if (!chat2DList) {
+          const newList = [newItem];
+          this.setState({
+            chat2DList: newList
+          });
+        } else {
+          this.setState({
+            chat2DList: chat2DList.concat(newItem)
+          });
+        }
         setTimeout(() => {
           this.setState(prevState => ({
             remove: prevState.remove + 1
@@ -150,7 +176,6 @@ class App extends Component {
     const newValue = e.target.value;
     this.setState({ chatThreadValue: newValue });
   }
-
   chatThreadDoSubmit(e) {
     const chatThreadIndex = this.state.chatThreadIndex;
     const chatThreadValue = this.state.chatThreadValue;
@@ -230,31 +255,70 @@ class App extends Component {
     }
   }
 
+  commandDoChange(e) {
+    const newValue = e.target.value;
+    this.setState({ commandValue: newValue });
+  }
+
+  commandDoSubmit(e) {
+    this.handleReadData(this.state.commandValue);
+    this.setState({
+      commandValue: ""
+    });
+    e.preventDefault();
+  }
+
   render() {
     const chat1DdoSubmit = e => this.chat1DdoSubmit(e);
     const chat1DdoChange = e => this.chat1DdoChange(e);
     const chatThreadDoSubmit = e => this.chatThreadDoSubmit(e);
     const chatThreadDoChange = e => this.chatThreadDoChange(e);
-    // console.log(this.state.users);
+    const commandDoChange = e => this.commandDoChange(e);
+    const commandDoSubmit = e => this.commandDoSubmit(e);
 
+    const content_div = this.state.isPlayerRendered ? (
+      <Content
+        videoID={this.state.videoID}
+        playerStyle={this.state.playerStyle}
+      />
+    ) : (
+      <Content
+        videoID={this.state.videoID}
+        playerStyle={this.state.playerStyle}
+      />
+    );
+    if (this.state.isPlayerRendered === false) {
+      this.setState({
+        isPlayerRendered: true
+      });
+    }
     return (
       <div className="App">
-        <div className="App-clock">
+        <span className="App-clock">
           <Clock />
-        </div>
+        </span>
+        <span className="App-classTitle">{this.state.classTitle}</span>
+        <span className="App-Command">
+          <form onSubmit={commandDoSubmit}>
+            <input
+              type="text"
+              className="AppCommandInput"
+              value={this.state.commandValue}
+              onChange={commandDoChange}
+              placeholder="명령을 입력해주세요"
+            />
+          </form>
+        </span>
         <div className="App-Blackboard">
-          <Blackboard
-            sendNotice={this.props.sendNotice}
-            notice={this.props.chatReducer.notice}
-          />
+          <Blackboard notice={this.props.chatReducer.notice} />
         </div>
-        <div className="App-content">
-          <Content />
-        </div>
+        <div className="App-content">{content_div}</div>
         <div className="App-ChatThread">
           <ChatThread
             chatList={this.state.chatThreadList}
-            chatTopic={this.state.chat1DList[this.state.chatThreadIndex]}
+            chatTopic={
+              this.props.chatReducer.chat1DList[this.state.chatThreadIndex]
+            }
             scrollToBottom={(flag, ref) => this.scrollToBottom(flag, ref)}
           />
         </div>

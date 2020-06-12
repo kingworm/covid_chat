@@ -10,6 +10,13 @@
   height: 50px;
 }
 
+.AppCommandInput {
+  position: absolute;
+  width: 20vw;
+  top: 1vh;
+  left: 79vw;
+}
+
 .App-ChatThreadInput {
   position: absolute;
   top: 90vh;
@@ -21,4 +28,12 @@
   text-align: left;
   width: 29.5vw;
   height: 50px;
+}
+
+.App-classTitle {
+  position: absolute;
+  text-align: center;
+  font-size: 4vh;
+  width: 100vw;
+  top: 3vh;
 }
