@@ -2,19 +2,22 @@ var express = require("express");
 var app = express();
 var cors = require("cors");
 var indexRouter = require("./routes/index");
-
-app.use(cors());
+var path = require('path');
+app.use(cors);
 app.use(indexRouter);
 var usersRouter = require("./routes/users");
 app.use("/users", usersRouter);
+app.set('views', path.join(__dirname, '../../build'));
+app.set('view engine', 'jade');
+
+app.use(express.static(path.join(__dirname,'../../build')));
 // portnumber를 3002로 지정
-const port = 3002;
+const port = process.env.PORT || 8080;
 
 // 3002번 포트넘버를 가진 서버 생성
 // app.listen(port, () => console.log(`listening on port ${port}!`));
 const server = require("http").createServer(app);
-const io = require("socket.io")(server, { origins: "*:*" });
-io.set("origins", "capston.redwit.io:80");
+const io = require("socket.io")(server);
 io.once("connection", socket => {
   console.log("연결된 socketID : ", socket.id);
   io.to(socket.id).emit("my socket id", { socketId: socket.id });
