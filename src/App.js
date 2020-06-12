@@ -9,7 +9,6 @@ import Clock from "./Clock";
 
 class App extends Component {
   constructor(props) {
-    console.log(props);
     super(props);
     this.state = {
       username: "guest",
@@ -132,16 +131,11 @@ class App extends Component {
           writer: "나",
           chatValue: chatValue
         };
-        if (!chat2DList) {
-          const newList = [newItem];
-          this.setState({
-            chat2DList: newList
-          });
-        } else {
-          this.setState({
-            chat2DList: chat2DList.concat(newItem)
-          });
-        }
+        this.props.send2DChat({
+          chat: newItem,
+          username: this.state.username
+        });
+        // this.setState({})
         setTimeout(() => {
           this.setState(prevState => ({
             remove: prevState.remove + 1
@@ -162,7 +156,7 @@ class App extends Component {
     if (flag === "o") {
       /* Click event from chat1D */
       // 1. Update thread information in state
-      const chat = this.state.chat1DList[i];
+      const chat = this.props.chatReducer.chat1DList[i];
       const chatThreadList = chat.chatThreadList;
       this.setState({
         chatThreadIndex: i,
@@ -181,7 +175,7 @@ class App extends Component {
     const chatThreadValue = this.state.chatThreadValue;
     if (chatThreadIndex !== null && chatThreadValue) {
       const chatThreadList = this.state.chatThreadList;
-      var newChat1DList = this.state.chat1DList.slice();
+      var newChat1DList = this.props.chatReducer.chat1DList.slice();
       // 1. Get current time
       const today = new Date();
       var sec = today.getSeconds();
@@ -203,24 +197,14 @@ class App extends Component {
         writer: "나",
         chatValue: chatThreadValue
       };
-      if (chatThreadList) {
-        // thread chat list is not empty
-        newChat1DList[chatThreadIndex].chatThreadList = newChat1DList[
-          chatThreadIndex
-        ].chatThreadList.concat(newThreadChat);
-        this.setState({
-          chat1DList: newChat1DList,
-          chatThreadList: chatThreadList.concat(newThreadChat),
-          chatThreadValue: ""
-        });
-      } else {
-        newChat1DList[chatThreadIndex].chatThreadList = [newThreadChat];
-        this.setState({
-          chat1DList: newChat1DList,
-          chatThreadList: [newThreadChat],
-          chatThreadValue: ""
-        });
-      }
+      this.props.sendThreadChat({
+        chat: newThreadChat,
+        username: this.state.username,
+        index: chatThreadIndex
+      });
+      this.setState({
+        chatThreadList: newChat1DList[chatThreadIndex].chatThreadList
+      });
     }
     this.setState({
       chatThreadValue: "",
@@ -310,12 +294,15 @@ class App extends Component {
           </form>
         </span>
         <div className="App-Blackboard">
-          <Blackboard notice={this.props.chatReducer.notice} />
+          <Blackboard
+            sendNotice={this.props.sendNotice}
+            notice={this.props.chatReducer.notice}
+          />
         </div>
         <div className="App-content">{content_div}</div>
         <div className="App-ChatThread">
           <ChatThread
-            chatList={this.state.chatThreadList}
+            chatList={this.props.chatReducer.chatThreadList}
             chatTopic={
               this.props.chatReducer.chat1DList[this.state.chatThreadIndex]
             }
@@ -362,40 +349,3 @@ class App extends Component {
 }
 
 export default App;
-
-// import React from "react";
-// import { HashRouter as Router, Route } from "react-router-dom";
-
-// import { Home } from "./components/Home";
-// import { Chat } from "./components/chat/Chat";
-
-// function App({
-//   chatReducer,
-//   mySocketId,
-//   enterChatroom,
-//   leaveChatroom,
-//   sendChat,
-//   clearChat
-// }) {
-//   console.log("src/App.js ", chatReducer);
-//   return (
-//     <Router>
-//       <Route path="/" exact component={Home}></Route>
-//       <Route
-//         path="/chat/:id"
-//         render={props => (
-//           <Chat
-//             chatReducer={chatReducer}
-//             mySocketId={mySocketId}
-//             leaveChatroom={leaveChatroom}
-//             enterChatroom={enterChatroom}
-//             sendChat={sendChat}
-//             clearChat={clearChat}
-//           />
-//         )}
-//       />
-//     </Router>
-//   );
-// }
-
-// export default App;

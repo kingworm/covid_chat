@@ -8,15 +8,15 @@ app.use(indexRouter);
 var usersRouter = require("./routes/users");
 app.use("/users", usersRouter);
 
-const buildPath = path.join(__dirname, "../../build");
-console.log(buildPath);
+// const buildPath = path.join(__dirname, "../../build");
+// console.log(buildPath);
 // app.set("views", buildPath);
 // app.set("view engine", "jade");
 
-app.use(express.static(buildPath));
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../public/index.html"));
-});
+// app.use(express.static(buildPath));
+// app.get("*", (req, res) => {
+// res.sendFile(path.join(__dirname, "../public/index.html"));
+// });
 // portnumber를 3002로 지정
 const port = process.env.PORT || 3002;
 // app.use(function(req, res, next) {

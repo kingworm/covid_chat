@@ -16,6 +16,10 @@ const socketSubscribe = dispatch => {
     console.log("App.js Socket(receive 2d chat) ", data);
     dispatch(action.receive2DChat(data));
   });
+  socket.on("receive thread chat", data => {
+    console.log("App.js Socket(receive thread chat) ", data);
+    dispatch(action.receiveThreadChat(data));
+  });
   socket.on("receive notice", data => {
     console.log("App.js Socket(receive notice) ", data);
     dispatch(action.receiveNotice(data));
@@ -50,6 +54,16 @@ const mapDispatchToProps = dispatch => {
       socket.emit("send 2d chat", {
         type: "msg",
         socketId: socket.id,
+        chat: data.chat,
+        username: data.username,
+        regDate: Date.now()
+      });
+    },
+    sendThreadChat: data => {
+      socket.emit("send thread chat", {
+        type: "msg",
+        socketId: socket.id,
+        index: data.index,
         chat: data.chat,
         username: data.username,
         regDate: Date.now()
