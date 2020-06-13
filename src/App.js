@@ -128,7 +128,7 @@ class App extends Component {
         };
         const newItem = {
           popupStyle: popupStyle,
-          writer: "나",
+          writer: this.state.username,
           chatValue: chatValue
         };
         this.props.send2DChat({
@@ -158,9 +158,14 @@ class App extends Component {
       // 1. Update thread information in state
       const chat = this.props.chatReducer.chat1DList[i];
       const chatThreadList = chat.chatThreadList;
+      this.props.sendThreadChat({
+        chat: chatThreadList,
+        username: this.state.username,
+        index: i
+      });
       this.setState({
         chatThreadIndex: i,
-        chatThreadList: chatThreadList,
+        // chatThreadList: chatThreadList,
         scrollIndex: "t"
       });
     }
@@ -194,7 +199,7 @@ class App extends Component {
       // 2. Make new item for thread chat list
       const newThreadChat = {
         time: time,
-        writer: "나",
+        writer: this.state.username,
         chatValue: chatThreadValue
       };
       this.props.sendThreadChat({
