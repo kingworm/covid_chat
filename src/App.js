@@ -228,6 +228,16 @@ class App extends Component {
     }
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.state !== nextState) return true;
+    if (
+      nextProps.chatReducer.chat2DList !== this.props.chatReducer.chat2DList
+    ) {
+      return true;
+    }
+    return false;
+  }
+
   scrollToBottom(flag, someRef) {
     if (someRef) {
       if (this.state.scrollIndex === flag) {

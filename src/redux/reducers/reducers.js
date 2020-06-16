@@ -22,7 +22,6 @@ const chatReducer = (state = chatStates, action) => {
       // let new2DChatList = state.chatList.slice();
       // new2DChatList.push(action.data);
       let new2DChatList = state.chat2DList.concat(action.data.chat);
-      setTimeout(() => {}, 4000);
       return { ...state, chat2DList: new2DChatList };
     case type.RECEIVE_THREAD_CHAT:
       const index = action.data.index;
