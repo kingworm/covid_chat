@@ -26,9 +26,11 @@ const chatReducer = (state = chatStates, action) => {
     case type.RECEIVE_THREAD_CHAT:
       const index = action.data.index;
       let newChatList = state.chat1DList;
-      newChatList[index].chatThreadList = state.chat1DList[
-        index
-      ].chatThreadList.concat(action.data.chat);
+      if (state.chat1DList[index] !== undefined) {
+        newChatList[index].chatThreadList = state.chat1DList[
+          index
+        ].chatThreadList.concat(action.data.chat);
+      }
       return {
         ...state,
         chat1DList: newChatList,
