@@ -230,9 +230,7 @@ class App extends Component {
 
   shouldComponentUpdate(nextProps, nextState) {
     if (this.state !== nextState) return true;
-    if (
-      nextProps.chatReducer.chat2DList !== this.props.chatReducer.chat2DList
-    ) {
+    if (nextProps.chatReducer !== this.props.chatReducer) {
       return true;
     }
     return false;
