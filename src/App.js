@@ -136,11 +136,6 @@ class App extends Component {
           username: this.state.username
         });
         // this.setState({})
-        setTimeout(() => {
-          this.setState(prevState => ({
-            remove: prevState.remove + 1
-          }));
-        }, 4000);
       }
       this.setState({
         scrollIndex: "0"
@@ -225,16 +220,11 @@ class App extends Component {
   }
 
   componentDidUpdate() {
-    const remove = this.state.remove;
+    const remove = this.props.chatReducer.chat2DList.length;
     if (remove !== 0) {
-      this.setState(
-        {
-          remove: remove - 1
-        },
-        () => {
-          this.props.pop2DChat();
-        }
-      );
+      setTimeout(() => {
+        this.props.pop2DChat();
+      }, 4000);
     }
   }
 
