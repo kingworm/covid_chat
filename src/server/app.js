@@ -97,11 +97,11 @@ io.on("connection", socket => {
 
   socket.on("enter chatroom", data => {
     console.log("누군가가 입장함", data);
-    socket.broadcast.emit("receive chat", {
-      type: "alert",
-      chat: `${data.username}님이 입장하였습니다.`,
-      regDate: Date.now()
-    });
+    // socket.broadcast.emit("receive chat", {
+    //   type: "alert",
+    //   chat: `${data.username}님이 입장하였습니다.`,
+    //   regDate: Date.now()
+    // });
   });
 
   socket.on("send chat", data => {
