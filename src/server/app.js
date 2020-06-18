@@ -75,14 +75,14 @@
 //   console.log(`listening port ${port}... `);
 // });
 
-var express = require("express");
-var app = express();
-var cors = require("cors");
-var indexRouter = require("./routes/index");
+const express = require("express");
+const app = express();
+const cors = require("cors");
+const indexRouter = require("./routes/index");
 
 app.use(cors());
 app.use(indexRouter);
-var usersRouter = require("./routes/users");
+const usersRouter = require("./routes/users");
 app.use("/users", usersRouter);
 // portnumber를 3002로 지정
 const port = 3002;

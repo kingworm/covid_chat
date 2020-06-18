@@ -6,6 +6,7 @@ const chatStates = {
   chat2DList: [],
   chatThreadList: [],
   socketId: null,
+  chatThreadIndex: null,
   notice: ""
 };
 
@@ -34,7 +35,8 @@ const chatReducer = (state = chatStates, action) => {
       return {
         ...state,
         chat1DList: newChatList,
-        chatThreadList: newChatList[index].chatThreadList
+        chatThreadList: newChatList[index].chatThreadList,
+        chatThreadIndex: index
       };
     case type.POP_2D_CHAT:
       let pop2DChatList = state.chat2DList.slice(1, state.chat2DList.length);

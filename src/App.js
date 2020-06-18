@@ -171,10 +171,10 @@ class App extends Component {
     this.setState({ chatThreadValue: newValue });
   }
   chatThreadDoSubmit(e) {
-    const chatThreadIndex = this.state.chatThreadIndex;
+    const chatThreadIndex = this.props.chatReducer.chatThreadIndex;
     const chatThreadValue = this.state.chatThreadValue;
     if (chatThreadIndex !== null && chatThreadValue) {
-      const chatThreadList = this.state.chatThreadList;
+      // const chatThreadList = this.state.chatThreadList;
       var newChat1DList = this.props.chatReducer.chat1DList.slice();
       // 1. Get current time
       const today = new Date();
@@ -309,7 +309,9 @@ class App extends Component {
           <ChatThread
             chatList={this.props.chatReducer.chatThreadList}
             chatTopic={
-              this.props.chatReducer.chat1DList[this.state.chatThreadIndex]
+              this.props.chatReducer.chat1DList[
+                this.props.chatReducer.chatThreadIndex
+              ]
             }
             scrollToBottom={(flag, ref) => this.scrollToBottom(flag, ref)}
           />
